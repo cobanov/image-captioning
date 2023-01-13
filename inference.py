@@ -1,54 +1,55 @@
-from torchvision import transforms
-from torchvision.transforms.functional import InterpolationMode
 import utils
 import torch
 from models.blip import blip_decoder
 from tqdm import tqdm
+import argparse
 
-# to GPU
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-# Read Images
-list_of_images = utils.read_images_from_directory("./images")
-pil_images = utils.read_with_pil(list_of_images)
+def init_model():
+    # to GPU
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-# Transform Object
-image_size = 384
-transform = transforms.Compose(
-    [
-        transforms.Resize(
-            (image_size, image_size), interpolation=InterpolationMode.BICUBIC
-        ),
-        transforms.ToTensor(),
-        transforms.Normalize(
-            (0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711)
-        ),
-    ]
-)
+    model = blip_decoder(
+        pretrained="./checkpoints/model_large_caption.pth", image_size=384, vit="large"
+    )
+    model.eval()
+    model = model.to(device)
+    print("model to device")
+    return model
 
+if __name__ == "__main__":
 
-# Transform Images
-t_images = [transform(img).unsqueeze(0).to(device) for img in pil_images]
-print("Images are transformed...")
+    # model = init_model()
+    parser = argparse.ArgumentParser(description="Image caption CLI")
+    parser.add_argument("-i", "--input", help="Input directoryt path, such as ./images")
+    parser.add_argument("-b", "--batch", help="Batch size", default=1, type=int)
+    parser.add_argument(
+        "-p", "--paths", help="A any.txt files contains all image paths."
+    )
 
-# Model
-print("Model Loading:")
+    args = parser.parse_args()
 
-model = blip_decoder(
-    pretrained="./checkpoints/model_large_caption.pth", image_size=384, vit="large"
-)
-model.eval()
-model = model.to(device)
-print("model to device")
+    if args.paths:  # If filepath.txt file does not exists
+        with open(args.paths, "r") as file:  #! Not tested yet
+            list_of_images = file.read()
+    else:
+        list_of_images = utils.read_images_from_directory(args.input)
 
-# Inference
-with torch.no_grad():
-    print("inference started")
-    with open("captions.txt", "w+") as file:
-        for path, image in zip(list_of_images, t_images):
+    # Split into batches
 
-            caption = model.generate(
-                image, sample=False, num_beams=3, max_length=20, min_length=5
-            )
-            file.write(path + ", " + caption[0] + "\n")
+    batches = None  # There will be some batch splitting technique
+
+    for batch_idx, batch in enumerate(batches):  # Don't forget to ad tqdm!
+        pil_images = utils.read_with_pil(list_of_images)
+        transformed_images = utils.prep_images(pil_images)
+
+        # Inference
+        with torch.no_grad():
+            print("inference started")
+            with open("{batch_idx}_captions.txt", "w+") as file:
+                for path, image in zip(list_of_images, transformed_images):
+
+                    caption = model.generate(
+                        image, sample=False, num_beams=3, max_length=20, min_length=5
+                    )
+                    file.write(path + ", " + caption[0] + "\n")
