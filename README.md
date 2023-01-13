@@ -10,9 +10,9 @@ Download the fine-tuned checkpoint and copy into 'checkpoints' folder (create if
 
 ## Demo
 
-![](demo.jpg)
+<img src='./demo.jpg' width=500px>
 
-```
+```txt
 ./images/image_003.png, a painting of a man in a turban reading a book
 ./images/image_008.png, a woman in a white and red outfit
 ./images/image_009.png, a statue of a woman holding a bird
@@ -27,7 +27,7 @@ Download the fine-tuned checkpoint and copy into 'checkpoints' folder (create if
 
 ## Usage
 
-```
+```bash
 python inference.py --image_folder --output_folder
 ```
 
