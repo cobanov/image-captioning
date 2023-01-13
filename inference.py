@@ -3,12 +3,13 @@ from torchvision.transforms.functional import InterpolationMode
 import utils
 import torch
 from models.blip import blip_decoder
+from tqdm import tqdm
 
+# to GPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-
 # Read Images
-list_of_images = utils.read_images_from_directory("./extracts")
+list_of_images = utils.read_images_from_directory("./images")
 pil_images = utils.read_with_pil(list_of_images)
 
 
@@ -33,18 +34,22 @@ print("Images are transformed...")
 
 # Model
 print("Model Loading:")
+
 model = blip_decoder(
     pretrained="./checkpoints/model_large_caption.pth", image_size=384, vit="large"
 )
 model.eval()
 model = model.to(device)
-
+print('model to device')
 
 # Inference
 with torch.no_grad():
-    for image in t_images:
-        caption = model.generate(
-            image, sample=False, num_beams=3, max_length=20, min_length=5
-        )
+    print('inference started')
+    with open('captions.txt', 'w+') as file:
+        for image in tqdm(t_images):
 
-        print("caption: ", caption[0])
+            caption = model.generate(
+                image, sample=False, num_beams=3, max_length=20, min_length=5
+            )
+            file.write(caption[0]+'\n')
+
