@@ -55,7 +55,7 @@ if __name__ == "__main__":
         print("Inference started")
         for batch_idx, batch in enumerate(batches):
             pil_images = utils.read_with_pil(list_of_images)
-            transformed_images = utils.prep_images(pil_images)
+            transformed_images = utils.prep_images(pil_images, device)
 
             with open("{batch_idx}_captions.txt", "w+") as file:
                 for path, image in zip(list_of_images, transformed_images):
