@@ -3,11 +3,19 @@ import torch
 from models.blip import blip_decoder
 from tqdm import tqdm
 import argparse
+import numpy as np
+
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 def init_model():
-    # to GPU
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+    # Model initialization
+    #
+    # This repo may be deprecated later
+    # It is kept like this in order not to
+    # wait for the model to load every time
+    # during the development phase.
 
     model = blip_decoder(
         pretrained="./checkpoints/model_large_caption.pth", image_size=384, vit="large"
@@ -17,9 +25,10 @@ def init_model():
     print("model to device")
     return model
 
+
 if __name__ == "__main__":
 
-    # model = init_model()
+    # CLI
     parser = argparse.ArgumentParser(description="Image caption CLI")
     parser.add_argument("-i", "--input", help="Input directoryt path, such as ./images")
     parser.add_argument("-b", "--batch", help="Batch size", default=1, type=int)
@@ -35,17 +44,19 @@ if __name__ == "__main__":
     else:
         list_of_images = utils.read_images_from_directory(args.input)
 
-    # Split into batches
+    # Batch processing
+    split_size = len(list_of_images) // args.batch
+    print(f"Split size: {split_size}")
+    batches = np.array_split(list_of_images, split_size)
 
-    batches = None  # There will be some batch splitting technique
+    # Inference
+    model = init_model()
+    with torch.no_grad():
+        print("Inference started")
+        for batch_idx, batch in enumerate(batches):
+            pil_images = utils.read_with_pil(list_of_images)
+            transformed_images = utils.prep_images(pil_images)
 
-    for batch_idx, batch in enumerate(batches):  # Don't forget to ad tqdm!
-        pil_images = utils.read_with_pil(list_of_images)
-        transformed_images = utils.prep_images(pil_images)
-
-        # Inference
-        with torch.no_grad():
-            print("inference started")
             with open("{batch_idx}_captions.txt", "w+") as file:
                 for path, image in zip(list_of_images, transformed_images):
 
