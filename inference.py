@@ -40,16 +40,15 @@ model = blip_decoder(
 )
 model.eval()
 model = model.to(device)
-print('model to device')
+print("model to device")
 
 # Inference
 with torch.no_grad():
-    print('inference started')
-    with open('captions.txt', 'w+') as file:
-        for image in tqdm(t_images):
+    print("inference started")
+    with open("captions.txt", "w+") as file:
+        for path, image in zip(list_of_images, t_images):
 
             caption = model.generate(
                 image, sample=False, num_beams=3, max_length=20, min_length=5
             )
-            file.write(caption[0]+'\n')
-
+            file.write(path + ", " + caption[0] + "\n")
