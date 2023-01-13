@@ -1,0 +1,7 @@
+timm
+transformers
+fairscale
+pycocoevalcap
+torch
+torchvision
+Pillow
