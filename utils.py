@@ -11,7 +11,7 @@ def read_images_from_directory(image_directory):
 
     list_of_images = []
     for ext in ("*.gif", "*.png", "*.jpg"):
-        list_of_images.extend(glob.glob(os.path.join(image_directory, ext)))
+        list_of_images.extend(sorted(glob.glob(os.path.join(image_directory, ext))))
     print(f"Images found: {len(list_of_images)}")
 
     return list_of_images
@@ -30,7 +30,7 @@ def read_with_pil(list_of_images, resize=False):
     return pil_images
 
 
-def prep_images(pil_images):
+def prep_images(pil_images, device):
     image_size = 384
     transform = transforms.Compose(
         [
