@@ -8,6 +8,23 @@ Download the fine-tuned checkpoint and copy into 'checkpoints' folder (create if
 
 - [BLIP-Large](https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_large_caption.pth)
 
+## Demo
+
+![](demo.jpg)
+
+```
+./images/image_003.png, a painting of a man in a turban reading a book
+./images/image_008.png, a woman in a white and red outfit
+./images/image_009.png, a statue of a woman holding a bird
+./images/image_015.png, a woman with freckles and flowers in her hair
+./images/image_021.png, a painting of a woman's face with fire coming out of her hair
+./images/image_028.png, a man in a tuxedo standing in front of a table with a light
+./images/image_034.png, a mosaic portrait of a woman wearing a headdress
+./images/image_040.png, a group of spaceships flying through a space filled with stars
+./images/image_046.png, a young man with black hair and a hoodie
+
+```
+
 ## Usage
 
 ```
