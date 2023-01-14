@@ -163,3 +163,5 @@ cython_debug/
 *.pth
 *.ipynb
 repl.py
+.DS_Store
+decoy/
