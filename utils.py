@@ -1,9 +1,18 @@
 import os
 from tqdm import tqdm
 import glob
+from pathlib import Path
 from PIL import Image
 from torchvision import transforms
 from torchvision.transforms.functional import InterpolationMode
+
+
+def create_dir(directory_path):
+    if not Path(directory_path).is_dir():
+        Path(directory_path).mkdir(exist_ok=True)
+        print(f"Directory is created {Path(directory_path).stem}")
+
+    return Path(directory_path).stem
 
 
 def read_images_from_directory(image_directory: str) -> list:
@@ -17,7 +26,9 @@ def read_images_from_directory(image_directory: str) -> list:
 
     list_of_images = list()
     for ext in ("*.gif", "*.png", "*.jpg"):
-        list_of_images.extend(glob.glob(os.path.join(image_directory, ext)))
+        list_of_images.extend(
+            glob.glob(os.path.join(image_directory, ext))
+        )  # ? Remove sorted if it is there
     print(f"Images found: {len(list_of_images)}")
 
     return list_of_images
