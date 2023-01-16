@@ -166,3 +166,5 @@ repl.py
 .DS_Store
 decoy/
 auto_blip.py
+captions/
+filepaths.txt

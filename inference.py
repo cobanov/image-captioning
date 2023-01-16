@@ -43,8 +43,8 @@ if __name__ == "__main__":
     opt = parser.parse_args()
 
     if opt.paths:  # If filepath.txt file does not exists
-        with open(opt.paths, "r") as file:  #! Not tested yet
-            list_of_images = file.read()
+        with open("filepaths.txt", "r") as file:
+            list_of_images = file.read().split('\n')
     else:
         list_of_images = utils.read_images_from_directory(opt.input)
 
