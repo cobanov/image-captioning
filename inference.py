@@ -60,12 +60,12 @@ if __name__ == "__main__":
     model = init_model()
     with torch.no_grad():
         print("Inference started")
-        for batch_idx, batch in enumerate(batches):
+        for batch_idx, batch in tqdm(enumerate(batches)):
             pil_images = utils.read_with_pil(batch)
             transformed_images = utils.prep_images(pil_images, device)
 
             with open(f"captions/{batch_idx}_captions.txt", "w+") as file:
-                for path, image in zip(list_of_images, transformed_images):
+                for path, image in zip(batch, transformed_images):
 
                     caption = model.generate(
                         image, sample=False, num_beams=3, max_length=20, min_length=5
