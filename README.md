@@ -27,8 +27,16 @@ Download the fine-tuned checkpoint and copy into 'checkpoints' folder (create if
 
 ## Usage
 
-```bash
-python inference.py --image_folder --output_folder
+```
+usage: inference.py [-h] [-i INPUT] [-b BATCH] [-p PATHS]        
+
+Image caption CLI
+
+optional arguments:
+  -h, --help               show this help message and exit
+  -i INPUT, --input INPUT  Input directoryt path, such as ./images  
+  -b BATCH, --batch BATCH  Batch size
+  -p PATHS, --paths PATHS  A any.txt files contains all image paths.
 ```
 
 ## Contributing
