@@ -1,8 +1,8 @@
 import os
-from tqdm import tqdm
 import glob
-from pathlib import Path
 from PIL import Image
+from tqdm import tqdm
+from pathlib import Path
 from torchvision import transforms
 from torchvision.transforms.functional import InterpolationMode
 
@@ -45,7 +45,7 @@ def read_with_pil(list_of_images: list, resize=False) -> list:
     """
 
     pil_images = list()
-    for img_path in tqdm(list_of_images):
+    for img_path in list_of_images:
         img = Image.open(img_path)
         if resize:  #! No hard code
             img.thumbnail((512, 512))
