@@ -1,10 +1,10 @@
 # Image Captioning
 
-captioning is a Python library for dealing with image captioning using BLIP.
+Captioning is the img2txt model that uses the BLIP. Exports captions of images.
 
 ## Checkpoints [Required]
 
-If 'checkpoints' folder does not exists, script will do automatically, you can also do it manually.
+If there is no 'Checkpoints' folder, the script will automatically create the folder and download the model file, you can do this manually if you want.
 
 Download the fine-tuned checkpoint and copy into 'checkpoints' folder (create if does not exists)
 
