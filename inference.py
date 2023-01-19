@@ -1,5 +1,7 @@
 import utils
 import torch
+from pathlib import Path
+
 from models.blip import blip_decoder
 from tqdm import tqdm
 import argparse
@@ -27,13 +29,13 @@ def init_model():
     # It is kept like this in order not to
     # wait for the model to load every time
     # during the development phase.
-
+    print("Checkpoint loading...")
     model = blip_decoder(
         pretrained="./checkpoints/model_large_caption.pth", image_size=384, vit="large"
     )
     model.eval()
     model = model.to(device)
-    print("model to device")
+    print(f"\nModel to {device}")
     return model
 
 
@@ -44,7 +46,7 @@ if __name__ == "__main__":
 
     if opt.paths:  # If filepath.txt file does not exists
         with open("filepaths.txt", "r") as file:
-            list_of_images = file.read().split('\n')
+            list_of_images = file.read().split("\n")
     else:
         list_of_images = utils.read_images_from_directory(opt.input)
 
@@ -53,14 +55,15 @@ if __name__ == "__main__":
     print(f"Split size: {split_size}")
     batches = np.array_split(list_of_images, split_size)
 
-    # Create directory if doesn't exists
-    utils.create_dir("captions")
+    if not Path("checkpoints").is_dir():
+        print(f"checkpoint did not found.")
+        utils.download_checkpoint()
 
     # Inference
     model = init_model()
     with torch.no_grad():
         print("Inference started")
-        for batch_idx, batch in tqdm(enumerate(batches)):
+        for batch_idx, batch in tqdm(enumerate(batches), unit="batch"):
             pil_images = utils.read_with_pil(batch)
             transformed_images = utils.prep_images(pil_images, device)
 

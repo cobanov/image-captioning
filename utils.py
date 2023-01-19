@@ -1,5 +1,6 @@
 import os
 import glob
+import requests
 from PIL import Image
 from tqdm import tqdm
 from pathlib import Path
@@ -13,6 +14,24 @@ def create_dir(directory_path):
         print(f"Directory is created {Path(directory_path).stem}")
 
     return Path(directory_path).stem
+
+
+def download_checkpoint():
+    url = "https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_large_caption.pth"
+    create_dir("checkpoints")
+
+    response = requests.get(url, stream=True)
+    total_size_in_bytes = int(response.headers.get("content-length", 0))
+    block_size = 1024  # 1 Kibibyte
+    progress_bar = tqdm(total=total_size_in_bytes, unit="iB", unit_scale=True)
+
+    with open("model_large_caption.pth", "wb") as file:
+        print("Downloading checkpoint...")
+        for data in response.iter_content(block_size):
+            progress_bar.update(len(data))
+            file.write(data)
+    progress_bar.close()
+    print("Checkpoint downloaded!")
 
 
 def read_images_from_directory(image_directory: str) -> list:
