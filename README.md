@@ -4,6 +4,8 @@ captioning is a Python library for dealing with image captioning using BLIP.
 
 ## Checkpoints [Required]
 
+If 'checkpoints' folder does not exists, script will do automatically, you can also do it manually.
+
 Download the fine-tuned checkpoint and copy into 'checkpoints' folder (create if does not exists)
 
 - [BLIP-Large](https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_large_caption.pth)
