@@ -8,8 +8,6 @@ import argparse
 import numpy as np
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
 
 def init_parser(**parser_kwargs):
     # CLI
@@ -19,6 +17,8 @@ def init_parser(**parser_kwargs):
     parser.add_argument(
         "-p", "--paths", help="A any.txt files contains all image paths."
     )
+    parser.add_argument('-g', '--gpu-id', type=int, default=0, help='gpu device to use (default=None) can be 0,1,2 for multi-gpu')
+
     return parser
 
 
@@ -43,6 +43,9 @@ if __name__ == "__main__":
 
     parser = init_parser()
     opt = parser.parse_args()
+
+    device = torch.device(f"cuda:{opt.gpu_id}" if torch.cuda.is_available() else "cpu")
+
 
     if opt.paths:  # If filepath.txt file does not exists
         with open("filepaths.txt", "r") as file:
