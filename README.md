@@ -30,16 +30,16 @@ Download the fine-tuned checkpoint and copy into 'checkpoints' folder (create if
 ## Usage
 
 ```bash
-usage: inference.py [-h] [-i INPUT] [-b BATCH] [-p PATHS]        
+usage: inference.py [-h] [-i INPUT] [-b BATCH] [-p PATHS] [-g GPU_ID]        
 
 Image caption CLI
 
 optional arguments:
-  -h, --help            show this help message and exit
-  -i INPUT, --input INPUT         Input directoryt path, such as ./images
-  -b BATCH, --batch BATCH         Batch size
-  -p PATHS, --paths PATHS         A any.txt files contains all image paths.
-  -g GPU_ID, --gpu-id GPU_ID      gpu device to use (default=None) can be 0,1,2 for multi-gpu
+  -h, --help                      show this help message and exit
+  -i INPUT,  --input INPUT        Input directoryt path, such as ./images
+  -b BATCH,  --batch BATCH        Batch size
+  -p PATHS,  --paths PATHS        A any.txt files contains all image paths.
+  -g GPU_ID, --gpu-id GPU_ID      gpu device to use (default=0) can be 0,1,2 for multi-gpu
 ```
 
 ### Example
