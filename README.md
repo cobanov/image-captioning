@@ -29,7 +29,7 @@ Download the fine-tuned checkpoint and copy into 'checkpoints' folder (create if
 
 ## Usage
 
-```
+```bash
 usage: inference.py [-h] [-i INPUT] [-b BATCH] [-p PATHS]        
 
 Image caption CLI
@@ -39,6 +39,11 @@ optional arguments:
   -i INPUT, --input INPUT  Input directoryt path, such as ./images  
   -b BATCH, --batch BATCH  Batch size
   -p PATHS, --paths PATHS  A any.txt files contains all image paths.
+```
+### Example
+
+```bash
+python inference.py -i /path/images/folder --batch 8
 ```
 
 ## Contributing
