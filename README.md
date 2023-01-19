@@ -35,15 +35,17 @@ usage: inference.py [-h] [-i INPUT] [-b BATCH] [-p PATHS]
 Image caption CLI
 
 optional arguments:
-  -h, --help               show this help message and exit
-  -i INPUT, --input INPUT  Input directoryt path, such as ./images  
-  -b BATCH, --batch BATCH  Batch size
-  -p PATHS, --paths PATHS  A any.txt files contains all image paths.
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT         Input directoryt path, such as ./images
+  -b BATCH, --batch BATCH         Batch size
+  -p PATHS, --paths PATHS         A any.txt files contains all image paths.
+  -g GPU_ID, --gpu-id GPU_ID      gpu device to use (default=None) can be 0,1,2 for multi-gpu
 ```
+
 ### Example
 
 ```bash
-python inference.py -i /path/images/folder --batch 8
+python inference.py -i /path/images/folder --batch 8 --gpu 0
 ```
 
 ## Contributing
