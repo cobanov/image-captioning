@@ -1,6 +1,6 @@
 # Image Captioning
 
-Captioning is the img2txt model that uses the BLIP. Exports captions of images.
+Captioning is an img2txt model that uses the BLIP. Exports captions of images.
 
 ## Checkpoints [Required]
 
