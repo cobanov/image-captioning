@@ -18,14 +18,12 @@ def create_dir(directory_path):
 
 def download_checkpoint():
     url = "https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_large_caption.pth"
-    create_dir("checkpoints")
-
     response = requests.get(url, stream=True)
     total_size_in_bytes = int(response.headers.get("content-length", 0))
     block_size = 1024  # 1 Kibibyte
     progress_bar = tqdm(total=total_size_in_bytes, unit="iB", unit_scale=True)
 
-    with open("model_large_caption.pth", "wb") as file:
+    with open("checkpoints/model_large_caption.pth", "wb") as file:
         print("Downloading checkpoint...")
         for data in response.iter_content(block_size):
             progress_bar.update(len(data))
@@ -65,7 +63,7 @@ def read_with_pil(list_of_images: list, resize=False) -> list:
 
     pil_images = list()
     for img_path in list_of_images:
-        img = Image.open(img_path)
+        img = Image.open(img_path).convert('RGB')
         if resize:  #! No hard code
             img.thumbnail((512, 512))
         pil_images.append(img)

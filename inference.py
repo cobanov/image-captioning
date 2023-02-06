@@ -8,27 +8,34 @@ import argparse
 import numpy as np
 
 
-
 def init_parser(**parser_kwargs):
-    # CLI
+    """
+    This function initializes the parser and adds arguments to it
+    :return: The parser object is being returned.
+    """
     parser = argparse.ArgumentParser(description="Image caption CLI")
     parser.add_argument("-i", "--input", help="Input directoryt path, such as ./images")
     parser.add_argument("-b", "--batch", help="Batch size", default=1, type=int)
     parser.add_argument(
         "-p", "--paths", help="A any.txt files contains all image paths."
     )
-    parser.add_argument('-g', '--gpu-id', type=int, default=0, help='gpu device to use (default=None) can be 0,1,2 for multi-gpu')
+    parser.add_argument(
+        "-g",
+        "--gpu-id",
+        type=int,
+        default=0,
+        help="gpu device to use (default=None) can be 0,1,2 for multi-gpu",
+    )
 
     return parser
 
 
 def init_model():
-    # Model initialization
-    #
-    # This repo may be deprecated later
-    # It is kept like this in order not to
-    # wait for the model to load every time
-    # during the development phase.
+    """
+    > Loads the model from the checkpoint file and sets it to eval mode
+    :return: The model is being returned.
+    """
+
     print("Checkpoint loading...")
     model = blip_decoder(
         pretrained="./checkpoints/model_large_caption.pth", image_size=384, vit="large"
@@ -46,7 +53,6 @@ if __name__ == "__main__":
 
     device = torch.device(f"cuda:{opt.gpu_id}" if torch.cuda.is_available() else "cpu")
 
-
     if opt.paths:  # If filepath.txt file does not exists
         with open("filepaths.txt", "r") as file:
             list_of_images = file.read().split("\n")
@@ -59,10 +65,12 @@ if __name__ == "__main__":
     batches = np.array_split(list_of_images, split_size)
 
     if not Path("checkpoints").is_dir():
-        print(f"checkpoint did not found.")
+        print(f"checkpoint directory did not found.")
+        utils.create_dir("checkpoints")
+
+    if not Path("checkpoints/model_large_caption.pth").is_file():
         utils.download_checkpoint()
 
-    # Inference
     model = init_model()
     with torch.no_grad():
         print("Inference started")
@@ -70,6 +78,10 @@ if __name__ == "__main__":
             pil_images = utils.read_with_pil(batch)
             transformed_images = utils.prep_images(pil_images, device)
 
+            if not Path("captions").is_dir():
+                print(f"captions directory did not found.")
+                utils.create_dir("captions")
+                 
             with open(f"captions/{batch_idx}_captions.txt", "w+") as file:
                 for path, image in zip(batch, transformed_images):
 
