@@ -15,15 +15,23 @@ Download the fine-tuned checkpoint and copy into 'checkpoints' folder (create if
 <img src='./demo.jpg' width=500px>
 
 ```txt
-./images/image_003.png, a painting of a man in a turban reading a book
-./images/image_008.png, a woman in a white and red outfit
-./images/image_009.png, a statue of a woman holding a bird
-./images/image_015.png, a woman with freckles and flowers in her hair
-./images/image_021.png, a painting of a woman's face with fire coming out of her hair
-./images/image_028.png, a man in a tuxedo standing in front of a table with a light
-./images/image_034.png, a mosaic portrait of a woman wearing a headdress
-./images/image_040.png, a group of spaceships flying through a space filled with stars
-./images/image_046.png, a young man with black hair and a hoodie
+datasets\0.jpg, a piece of cheese with figs and a piece of cheese
+datasets\1002.jpg, a close up of a yellow flower with a green background
+datasets\1005.jpg, a planter filled with lots of colorful flowers
+datasets\1008.jpg, a teacher standing in front of a classroom full of children
+datasets\1011.jpg, a tortoise on a white background with a white background
+datasets\1014.jpg, a glass of wine sitting on top of a table
+datasets\1017.jpg, a close up of a plant with pink flowers
+datasets\102.jpg, a platter of different types of sushi
+datasets\1020.jpg, a frog sitting on top of a bamboo stick
+datasets\1023.jpg, a revolver on a white background
+datasets\1026.jpg, a woman holding a small white dog in her arms
+datasets\1029.jpg, a woman in a business suit standing in front of a building
+datasets\1032.jpg, sliced cucumber on a white background
+datasets\1035.jpg, a woman in glasses and a pair of boxing gloves
+datasets\1038.jpg, a pile of sliced potatoes on a white surface
+datasets\1041.jpg, two glasses of orange juice on a wooden table
+datasets\1044.jpg, a woman sitting on the floor in front of a door
 
 ```
 
