@@ -52,7 +52,7 @@ if __name__ == "__main__":
     opt = parser.parse_args()
 
     device = torch.device(f"cuda:{opt.gpu_id}" if torch.cuda.is_available() else "cpu")
-
+    print(f'Device: {device}')
     if opt.paths:  # If filepath.txt file does not exists
         with open("filepaths.txt", "r") as file:
             list_of_images = file.read().split("\n")
